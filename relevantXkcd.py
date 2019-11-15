@@ -25,5 +25,7 @@ elif searchType == "phrase":
     except:
         print("An error occured. Perhaps you didn't enter an integer for the number of searches, or you don't have google, or maybe its all my fault and I really am a disappointment like my parents said.")
         webbrowser.open_new("https://xkcd.com/2200/")
+else:
+    webbrowser.open_new("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
 
 
