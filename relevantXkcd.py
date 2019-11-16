@@ -16,10 +16,10 @@ if searchType == "number":
 elif searchType == "phrase":
     referencePhrase = input("What is the relevant phrase?")
     results = input("How many xkcds would you like to search for?")
-    query = ("xkcd " + str(referencePhrase))
+    query = ("site:xkcd.com " + str(referencePhrase))
     try:
         num = int(results)
-        for i in search(query, tld='co.in', num=num, stop=num, pause=5):
+        for i in search(query, tld="co.in", num=num, stop=num, pause=5):
             str(i)
             webbrowser.open_new(i)
     except:
