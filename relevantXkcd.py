@@ -24,7 +24,7 @@ if searchType == "number":
         print("An error occured. Perhaps you didn't enter an integer, or you don't have a recognized web browser, or dark magic interfered. The world may never know.")
         webbrowser.open_new("https://xkcd.com/2200/")
 elif searchType == "phrase":
-    pattern = r"https?://xkcd.com/\d+/" # Matches url for an xkcd, with or without https
+    pattern = r"^https?://xkcd.com/\d+/$" # Matches url for an xkcd, with or without https
     referencePhrase = input("What is the relevant phrase?")
     num_results = input("How many xkcds would you like to search for?")
     query = ("site:xkcd.com " + str(referencePhrase))
