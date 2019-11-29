@@ -1,5 +1,5 @@
-import urllib
 import re
+import urllib
 
 
 def _get_latest_source():

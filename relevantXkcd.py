@@ -1,6 +1,7 @@
-import webbrowser
-import re
 import random
+import re
+import webbrowser
+
 from googlesearch import search
 
 from newestXkcd import latest_comic_num
@@ -46,5 +47,3 @@ elif searchType == "random":
     webbrowser.open_new(random_url)
 else:
     webbrowser.open_new("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
-
-
