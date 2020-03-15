@@ -3,7 +3,6 @@ import os
 import asyncio
 import random
 import re
-#import discord
 from discord.ext import commands
 from dotenv import load_dotenv
 from googlesearch import search
@@ -15,7 +14,6 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 
 URL = 'https://xkcd.com/'
 
-#client = discord.Client
 
 bot = commands.Bot(command_prefix='!')
 
