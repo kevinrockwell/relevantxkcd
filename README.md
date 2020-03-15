@@ -1,2 +1,2 @@
 # relevantxkcd
-Program for looking up relevant xkcd's
+Program for looking up relevant xkcds
