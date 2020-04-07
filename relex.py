@@ -49,7 +49,12 @@ async def search_phrase(ctx, phrase):
             if re.match(pattern, page):
                 link = page
                 found = True
-    await ctx.send(f'The most relevant xkcd found for the phrase \"{phrase}\" is {link}')
+    await ctx.send(f'The most relevant xkcd found for the phrase \"{phrase}\" is: {link}')
+
+@bot.command(name='newest', pass_context=True)
+async def newest(ctx):
+    newest_comic = latest_comic_num()
+    await ctx.send(f'The most recent xkcd is: {URL}{newest_comic}')
 
 bot.run(TOKEN)
 
