@@ -5,7 +5,7 @@ import random
 import re
 from discord.ext import commands
 from dotenv import load_dotenv
-from googlesearch import search
+import googlesearch
 
 from newest_xkcd import latest_comic_num
 
@@ -27,7 +27,7 @@ async def random_comic(ctx):
     comic_num = random.randint(1, newest_comic)
     await ctx.send(f'{URL}{comic_num}/')
 
-@bot.command(name='search_phrase', pass_context=True)
+@bot.command(name='search_phrase', pass_context=True, aliases=['search'])
 async def search_phrase(ctx, phrase):
     query = f'site:xkcd.com {str(phrase)}'
     pattern = r'^https?://xkcd.com/\d+/$'
@@ -43,7 +43,7 @@ async def search_phrase(ctx, phrase):
         if links >= 10:
             await ctx.send('I searched through 10 links and didn\'t find a match. Maybe there\'s not always a relevant xkcd.')
             return
-        result = search(query, num=10, start=first, stop=last, pause=2.0)
+        result = googlesearch.search(query, num=10, start=first, stop=last, pause=2.0)
         for page in result:
             links += 1
             if re.match(pattern, page):
