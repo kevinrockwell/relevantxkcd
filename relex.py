@@ -31,7 +31,7 @@ async def on_disconnect():
     await bot.SESSION.close()
 
 
-@bot.command(name='number', pass_context=True, aliases=['n'])
+@bot.command(name='number', pass_context=True, description='Get comic by number',aliases=['n'])
 async def number(ctx, num: int):
     await ctx.send(ctx.message.author.mention + f' {URL}{num}/')
 
@@ -43,16 +43,18 @@ async def number_error(ctx, error):
         await ctx.send(ctx.message.author.mention + f' Error: could not parse "{"".join(message_contents[1:])}"')
 
 
-@bot.command(name='random_comic', pass_context=True, aliases=['random', 'rand', 'r'])
+@bot.command(name='random_comic', pass_context=True, description='Get random comic', aliases=['random', 'rand', 'r'])
 async def random_comic(ctx):
     newest_comic = await latest_comic_num(bot.SESSION)
     comic_num = random.randint(1, newest_comic)
     await ctx.send(ctx.message.author.mention + f' {URL}{comic_num}/')
 
 
-@bot.command(name='search_phrase', pass_context=True, aliases=['search', 's', 'find', 'f'])
+@bot.command(name='search_phrase', pass_context=True, discription='Search by a word/phrase',
+             aliases=['search', 's', 'find', 'f'])
 async def search_phrase(ctx):
     split_phrase = ctx.message.content.split()
+    # Remove command from message
     if len(split_phrase) > 1:
         phrase = ' '.join(split_phrase[1:])
     else:
@@ -65,7 +67,7 @@ async def search_phrase(ctx):
     await ctx.send(ctx.message.author.mention + ' ' + result)
 
 
-@bot.command(name='newest', pass_context=True, aliases=['latest', 'relex'])
+@bot.command(name='newest', pass_context=True, description='Get newest comic',aliases=['latest', 'relex'])
 async def newest(ctx):
     newest_comic = await latest_comic_num(bot.SESSION)
     await ctx.send(ctx.message.author.mention + f' The most recent xkcd is: {URL}{newest_comic}')
