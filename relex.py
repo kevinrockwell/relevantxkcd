@@ -19,6 +19,7 @@ bot = commands.Bot(command_prefix='!')
 
 @bot.event
 async def on_connect():
+    print(f'Bot connected as {bot.user}')
     try:
         if bot.SESSION.closed:
             bot.SESSION = aiohttp.ClientSession()
