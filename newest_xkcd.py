@@ -1,19 +1,16 @@
 import re
-import urllib
+
+PATTERN = re.compile(r"Permanent link to this comic: https?://xkcd\.com/(?P<num>\d+)/")
 
 
-def _get_latest_source():
-    try:
-        response = urllib.request.urlopen("https://xkcd.com")
-        return response.read()
-    except urllib.error.URLError:
-        return None
+async def _get_latest_source(session):
+    async with session.get('https://xkcd.com') as request:
+        return await request.text()
 
-def latest_comic_num():
-    pattern = \
-        r"Permanent link to this comic: https?://xkcd\.com/(?P<num>\d+)/"
-    latest_source = _get_latest_source()
+
+async def latest_comic_num(session):
+    latest_source = await _get_latest_source(session)
     if latest_source is not None:
-        permalink = re.search(pattern, str(latest_source))
+        permalink = re.search(PATTERN, str(latest_source))
         return int(permalink.group("num"))
     return None #No latest source, likely internet problems
