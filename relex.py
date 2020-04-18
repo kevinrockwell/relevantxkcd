@@ -51,7 +51,13 @@ async def random_comic(ctx):
 
 
 @bot.command(name='search_phrase', pass_context=True, aliases=['search', 's', 'find', 'f'])
-async def search_phrase(ctx, phrase: str):
+async def search_phrase(ctx):
+    split_phrase = ctx.message.content.split()
+    if len(split_phrase) > 1:
+        phrase = ' '.join(split_phrase[1:])
+    else:
+        ctx.send(ctx.message.author.mention + ' Error: no phrase provided')
+        return
     await ctx.send(ctx.message.author.mention + f' searching for the xkcd most relevant to the phrase \"{phrase}\".')
     loop = asyncio.get_running_loop()
     # `googlesearch` does not support async, so use executor to avoid blocking everything
