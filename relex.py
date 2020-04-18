@@ -31,31 +31,38 @@ async def on_disconnect():
     await bot.SESSION.close()
 
 
-@bot.command(name='number', pass_context=True)
-async def number(ctx, number):
-    await ctx.send(f'{URL}{number}/')
+@bot.command(name='number', pass_context=True, aliases=['n'])
+async def number(ctx, num: int):
+    await ctx.send(ctx.message.author.mention + f' {URL}{num}/')
 
 
-@bot.command(name='random_comic', pass_context=True)
+@number.error
+async def number_error(ctx, error):
+    if isinstance(error, commands.BadArgument):
+        message_contents = ctx.message.content.split()
+        await ctx.send(ctx.message.author.mention + f' Error: could not parse "{"".join(message_contents[1:])}"')
+
+
+@bot.command(name='random_comic', pass_context=True, aliases=['random', 'rand', 'r'])
 async def random_comic(ctx):
     newest_comic = await latest_comic_num(bot.SESSION)
     comic_num = random.randint(1, newest_comic)
-    await ctx.send(f'{URL}{comic_num}/')
+    await ctx.send(ctx.message.author.mention + f' {URL}{comic_num}/')
 
 
-@bot.command(name='search_phrase', pass_context=True, aliases=['search'])
-async def search_phrase(ctx, phrase):
-    await ctx.send(f'Now searching for the xkcd most relevant to the phrase \"{phrase}\".')
+@bot.command(name='search_phrase', pass_context=True, aliases=['search', 's', 'find', 'f'])
+async def search_phrase(ctx, phrase: str):
+    await ctx.send(ctx.message.author.mention + f' searching for the xkcd most relevant to the phrase \"{phrase}\".')
     loop = asyncio.get_running_loop()
     # `googlesearch` does not support async, so use executor to avoid blocking everything
     result = await loop.run_in_executor(None, search, phrase)
-    await ctx.send(result)
+    await ctx.send(ctx.message.author.mention + ' ' + result)
 
 
-@bot.command(name='newest', pass_context=True)
+@bot.command(name='newest', pass_context=True, aliases=['latest', 'relex'])
 async def newest(ctx):
     newest_comic = await latest_comic_num(bot.SESSION)
-    await ctx.send(f'The most recent xkcd is: {URL}{newest_comic}')
+    await ctx.send(ctx.message.author.mention + f' The most recent xkcd is: {URL}{newest_comic}')
 
 
 bot.run(TOKEN)
