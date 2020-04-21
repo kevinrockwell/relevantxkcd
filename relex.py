@@ -76,7 +76,7 @@ async def newest(ctx):
 @bot.command()
 async def xkcd(ctx, *args):
     if len(args) == 1:
-        if isdigit(args[0]):
+        if args[0].isdigit():
             await number(ctx, int(args[0]))
             return
     await search_phrase(' '.join(args))
