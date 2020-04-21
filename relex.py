@@ -79,6 +79,6 @@ async def xkcd(ctx, *args):
         if args[0].isdigit():
             await number(ctx, int(args[0]))
             return
-    await search_phrase(' '.join(args))
+    await search_phrase(ctx)
 
 bot.run(TOKEN)
