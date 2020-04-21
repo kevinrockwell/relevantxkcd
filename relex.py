@@ -73,5 +73,12 @@ async def newest(ctx):
     newest_comic = await latest_comic_num(bot.SESSION)
     await ctx.send(ctx.message.author.mention + f' The most recent xkcd is: {URL}{newest_comic}')
 
+@bot.command()
+async def xkcd(ctx, *args):
+    if len(args) == 1:
+        if isdigit(args[0]):
+            await number(ctx, int(args[0]))
+            return
+    await search_phrase(' '.join(args))
 
 bot.run(TOKEN)
